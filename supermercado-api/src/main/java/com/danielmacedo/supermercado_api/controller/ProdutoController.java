@@ -2,6 +2,7 @@ package com.danielmacedo.supermercado_api.controller;
 
 import com.danielmacedo.supermercado_api.business.ProdutoService;
 import com.danielmacedo.supermercado_api.dto.ProdutoDTO;
+import com.danielmacedo.supermercado_api.exceptions.ResourceNotFoundException;
 import com.danielmacedo.supermercado_api.infrastructure.entities.Produto;
 import com.danielmacedo.supermercado_api.mapper.ProdutoMapper;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class ProdutoController {
     public ProdutoDTO buscarProduto(@PathVariable Integer id) {
         Produto produto = _produtoService.buscarPorId(id);
         if (produto == null) {
-            throw new RuntimeException("Produto não encontrado");
+            throw new ResourceNotFoundException("Produto não encontrado");
         }
         return ProdutoMapper.toDTO(produto);
     }
