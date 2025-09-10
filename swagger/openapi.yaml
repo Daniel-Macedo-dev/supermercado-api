@@ -1,0 +1,97 @@
+openapi: 3.0.1
+info:
+  title: API de Supermercado
+  version: v1
+servers:
+  - url: http://localhost:8080
+    description: API para gerenciamento de produtos do supermercado
+paths:
+  /produtos:
+    get:
+      summary: Listar todos os produtos
+      tags:
+        - produto-controller
+      operationId: listarProdutos
+      responses:
+        '200':
+          description: Lista de produtos retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+    post:
+      summary: Criar um novo produto
+      tags:
+        - produto-controller
+      operationId: criarProduto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produto'
+      responses:
+        '201':
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '400':
+          description: Erro na requisição
+  /produtos/{id}:
+    get:
+      summary: Buscar produto por ID
+      tags:
+        - produto-controller
+      operationId: buscarProduto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '404':
+          description: Produto não encontrado
+    delete:
+      summary: Deletar produto por ID
+      tags:
+        - produto-controller
+      operationId: deletarProduto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: Produto deletado com sucesso
+        '404':
+          description: Produto não encontrado
+components:
+  schemas:
+    Produto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        nome:
+          type: string
+        preco:
+          type: number
+          format: double
+        categoria:
+          type: string
