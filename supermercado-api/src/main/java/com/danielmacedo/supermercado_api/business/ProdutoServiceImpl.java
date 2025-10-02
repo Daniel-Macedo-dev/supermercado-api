@@ -57,7 +57,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         existente.setPreco(produtoAtualizado.getPreco());
 
         Produto atualizado = produtoRepository.save(existente);
-        log.info("Produto com id {} atualizado com sucesso", atualizado.getId());
+        log.debug("Produto com id {} atualizado com sucesso", atualizado.getId());
         return atualizado;
     }
 
@@ -70,7 +70,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         if (produtoParcial.getPreco() != null) existente.setPreco(produtoParcial.getPreco());
 
         Produto atualizado = produtoRepository.save(existente);
-        log.info("Produto com id {} atualizado parcialmente com sucesso", atualizado.getId());
+        log.debug("Produto com id {} atualizado parcialmente com sucesso", atualizado.getId());
         return atualizado;
     }
 }

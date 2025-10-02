@@ -26,7 +26,7 @@ public class ProdutoController {
         log.info("Requisição POST /produtos para criar produtos");
         Produto produto = ProdutoMapper.toEntity(dto);
         Produto salvo = produtoService.save(produto);
-        log.info("Produto criado com id {}", salvo.getId());
+        log.debug("Produto criado com id {}", salvo.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(ProdutoMapper.toDTO(salvo));
     }
 
@@ -50,7 +50,7 @@ public class ProdutoController {
                                                        @RequestBody ProdutoDTO dto) {
         log.info("Requisição PUT /produtos/{} para atualização completa", id);
         Produto produtoAtualizado = produtoService.atualizar(id, ProdutoMapper.toEntity(dto));
-        log.info("Produto atualizado com sucesso", produtoAtualizado.getId());
+        log.debug("Produto atualizado com sucesso", produtoAtualizado.getId());
         return ResponseEntity.ok(ProdutoMapper.toDTO(produtoAtualizado));
     }
 
@@ -59,7 +59,7 @@ public class ProdutoController {
                                                        @RequestBody ProdutoDTO dto) {
         log.info("Requisição PATCH /produtos/{} para atualização parcial", id);
         Produto produtoAtualizado = produtoService.atualizar(id, ProdutoMapper.toEntity(dto));
-        log.info("Produto atualizado parcialmente", produtoAtualizado.getId());
+        log.debug("Produto atualizado parcialmente", produtoAtualizado.getId());
         return ResponseEntity.ok(ProdutoMapper.toDTO(produtoAtualizado));
     }
 
