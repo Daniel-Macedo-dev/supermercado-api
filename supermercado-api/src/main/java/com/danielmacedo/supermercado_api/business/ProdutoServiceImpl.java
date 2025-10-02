@@ -21,7 +21,12 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public Produto save(Produto produto) {return produtoRepository.save(produto);}
+    public Produto save(Produto produto) {
+        log.info("Salvando produto: {}", produto.getNome());
+        Produto salvo = produtoRepository.save(produto);
+        log.debug("Produto salvo com ID: {}", salvo.getId());
+        return salvo;
+    }
 
     @Override
     public List<Produto> listarTodos() {return produtoRepository.findAll();}
@@ -34,29 +39,38 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public void deletar(Integer id) {
+        log.info("Tentando deletar produto com id: {}", id);
         if (!produtoRepository.existsById(id)) {
+            log.error("Falha ao deletar, produto com id {} não existe", id);
             throw new ResourceNotFoundException("Produto com id " + id + " não encontrado.");
         }
         produtoRepository.deleteById(id);
+        log.info("Produto com id {} deletado com sucesso", id);
     }
 
     @Override
     public Produto atualizar(Integer id, Produto produtoAtualizado) {
+        log.info("Atualizado produto com id: {}", id);
         Produto existente = buscarPorId(id);
 
         existente.setNome(produtoAtualizado.getNome());
         existente.setPreco(produtoAtualizado.getPreco());
 
-        return produtoRepository.save(existente);
+        Produto atualizado = produtoRepository.save(existente);
+        log.info("Produto com id {} atualizado com sucesso", atualizado.getId());
+        return atualizado;
     }
 
     @Override
     public Produto atualizarParcial(Integer id, Produto produtoParcial) {
+        log.info("Atualização parcial do produto cmo id: {}", id);
         Produto existente = buscarPorId(id);
 
         if (produtoParcial.getNome() != null) existente.setNome(produtoParcial.getNome());
         if (produtoParcial.getPreco() != null) existente.setPreco(produtoParcial.getPreco());
 
-        return produtoRepository.save(existente);
+        Produto atualizado = produtoRepository.save(existente);
+        log.info("Produto com id {} atualizado parcialmente com sucesso", atualizado.getId());
+        return atualizado;
     }
 }
