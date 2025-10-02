@@ -3,12 +3,16 @@ package com.danielmacedo.supermercado_api.business;
 import com.danielmacedo.supermercado_api.infrastructure.entities.Produto;
 import com.danielmacedo.supermercado_api.infrastructure.repository.ProdutoRepository;
 import com.danielmacedo.supermercado_api.exceptions.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
+
+    private static final Logger log = LoggerFactory.getLogger(ProdutoServiceImpl.class);
 
     private final ProdutoRepository produtoRepository;
 
