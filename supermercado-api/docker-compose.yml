@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8.1
+    container_name: supermercado-mysql
+    environment:
+      MYSQL_DATABASE: supermercado_api
+      MYSQL_USER: supermercado_user
+      MYSQL_PASSWORD: daniel11
+      MYSQL_ROOT_PASSWORD: daniel11
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  api:
+    build: .
+    container_name: supermercado-api
+    image: supermercado-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/supermercado_api?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: supermercado_user
+      SPRING_DATASOURCE_PASSWORD: daniel11
+    depends_on:
+      - mysql
+
+volumes:
+  db_data:
